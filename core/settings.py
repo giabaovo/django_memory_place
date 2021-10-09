@@ -41,13 +41,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
+    # The following apps are required to use django-allauth:
+    # include (auth, sites and messages) that are default in
+    # Django
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    # The providers that you want to add:
+    # See more: https://django-allauth.readthedocs.io/en/latest/providers.html
     'allauth.socialaccount.providers.facebook',
 
+    # App
     'memory',
-    'accounts',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -144,6 +150,17 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Custom user model config
+AUTH_USER_MODEL = 'users.User'
+
+# Email server config
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'giabaovo123456@gmail.com'
+EMAIL_HOST_PASSWORD = 'hjjchwewghtzulbd'
+
+# Django all-auth config
 SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = [
@@ -154,13 +171,18 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+
+# Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
     'facebook': {
         'METHOD': 'oauth2',
-        'SDK_URL': '//connect.facebook.net/{locale}/sdk.js',
         'SCOPE': ['email', 'public_profile'],
-        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-        'INIT_PARAMS': {'cookie': True},
         'FIELDS': [
             'id',
             'first_name',
@@ -169,11 +191,13 @@ SOCIALACCOUNT_PROVIDERS = {
             'name',
             'name_format',
             'picture',
-            'short_name'
+            'short_name',
         ],
-        'EXCHANGE_TOKEN': True,
-        'LOCALE_FUNC': 'path.to.callable',
-        'VERIFIED_EMAIL': False,
         'VERSION': 'v12.0',
+        'APP': {
+            'client_id': '3201573370078022',  # !!! THIS App ID
+            'secret': 'ac1b0641a8ba5f443b003454e1ade51e',  # !!! THIS App Secret
+            'key': ''
+        }
     }
 }
