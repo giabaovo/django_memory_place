@@ -181,6 +181,14 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+
+# This settings will skip logout page and auto logout user using
+# GET request. This can be dangerous cause some one can
+# <img src="https://example.com/account/logout">
+# and get you signed out without you ever knowing it.
+# See more: https://stackoverflow.com/questions/18134807/how-to-disable-intermediate-signout-page-in-django-allauth
+ACCOUNT_LOGOUT_ON_GET = True
+
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/'
 
 # Provider specific settings
