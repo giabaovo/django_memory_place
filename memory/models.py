@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.gis.db import models
 
 from django.urls import reverse
 
@@ -10,6 +11,7 @@ class Memory(models.Model):
     descripsion = models.TextField()
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='memory')
+    location = models.PointField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

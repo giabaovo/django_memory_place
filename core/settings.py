@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     'users',
 
     'bootstrap5',
+
+    'leaflet',
 ]
 
 MIDDLEWARE = [
@@ -145,6 +147,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+SERIALIZATION_MODULES = {
+    "geojson": "django.contrib.gis.serializers.geojson",
+}
 
 
 # Default primary key field type

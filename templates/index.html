@@ -72,6 +72,15 @@
     <section class="py-5">
         <h2 class="display-4 fw-bolder text-center">Your memory</h2>
         <div class="container px-4 px-lg-5 mt-5">
+            {% if user.is_authenticated %}
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <a class="btn btn-primary" href="{% url 'memory_add' %}">
+                    Add more memory
+                </a>
+            </div>
+            {% endif %}
+            <br>
+            <br>
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 {% if user.is_authenticated %}
                 {% if memories %}
@@ -98,7 +107,6 @@
                     </div>
                 </div>
                 {% endfor %}
-
                 {% else %}
                 <p>You dont have memory. Let add more</p>
                 {% endif %}
@@ -107,6 +115,31 @@
                 <p>You need to login to see your memory</p>
                 {% endif %}
             </div>
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+                {% if memories.has_other_pages %}
+                <ul class="pagination">
+                    {% if memories.has_previous %}
+                    <li><a href="?page={{ memories.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                    <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in memories.paginator.page_range %}
+                    {% if memories.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if memories.has_next %}
+                    <li><a href="?page={{ memories.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                    <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+            </div>
+
         </div>
     </section>
     <!-- Footer-->
